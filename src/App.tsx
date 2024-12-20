@@ -1,10 +1,21 @@
-import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import { useState } from 'react'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [color, setColor] = useState('#333')
+
+  const handleClickButton =async () => {
+    const [tab] = await chrome.tabs.query({active: true})
+    chrome.scripting.executeScript<string[], void>({
+      target: { tabId: tab.id! },
+      args: [color],
+      func:(color) => {
+        document.body.style.backgroundColor = color
+      }
+    })
+  }
 
   return (
     <>
@@ -16,10 +27,14 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>Vite + React</h1>
+      <h1>My extension</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+        <input 
+          type="color"
+          onChange={(e) => setColor(e.currentTarget.value)}
+        />
+        <button onClick={handleClickButton}>
+          Click me!
         </button>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
