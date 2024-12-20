@@ -1,5 +1,7 @@
 # chrome-extension-vite-typescript
 
+<img src="./preview.png" alt="Vite extension preview">
+
 <video width="640" height="400" controls>
   <source src="./vite-extension-demo.mp4" type="video/mp4">
 </video>
